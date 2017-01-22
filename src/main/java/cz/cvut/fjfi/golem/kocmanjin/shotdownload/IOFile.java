@@ -15,44 +15,37 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- *
- * @author klostha
+ * Created by kocmanjin on 1/22/17.
  */
 public class IOFile {
-    
-    private static final String channelOpen = "Otevírám kanál: ";
     
     static {
         Locale.setDefault(Locale.ENGLISH);
     }
-    
-    public static File getFile(String nazev) {
-		if ((nazev == null)||(nazev.length() == 0)) {
-			throw new IllegalArgumentException("Nazev souboru nesmi byt prazdny");
+
+    public static File getFile(String fileName) {
+		if ((fileName == null)||(fileName.length() == 0)) {
+			throw new IllegalArgumentException("Name of the file cannot be empty!");
 		}
-		if (nazev.startsWith(File.separator)) {
-			nazev = nazev.substring(1);
+		if (fileName.startsWith(File.separator)) {
+			fileName = fileName.substring(1);
 		}
-		if (nazev.lastIndexOf(File.separator) > 0) {
-			String path = nazev.substring(0, nazev.lastIndexOf(File.separator));
+		if (fileName.lastIndexOf(File.separator) > 0) {
+			String path = fileName.substring(0, fileName.lastIndexOf(File.separator));
 			File outputfile = new File(path);
 			outputfile.mkdirs();
 		}
-        File ret = new File(nazev);
+        File ret = new File(fileName);
 		return ret;
 	}
     
-    /** Scanner pro nacteni vstupnch dat */
-    /** Vystupni proud */
-//    private static PrintStream output;
-    
+
     public static String loadStringFromURL(String address) {
         URL url = null;
         Scanner input;
         String ret = null;
         try {
             url = new URL(address);
-            System.out.println(channelOpen + address);
             input = new Scanner(url.openStream());
             ret = input.nextLine();
         } catch (MalformedURLException ex) {
@@ -62,7 +55,6 @@ public class IOFile {
             System.err.println("Chyba otevírání souboru na adrese "+url.getPath()+". " + ex.getLocalizedMessage());
             return null;
         }
-        
         return ret;
     }
     
@@ -72,7 +64,6 @@ public class IOFile {
         URL url = null;
         try {
             url = new URL(address);
-            System.out.println(channelOpen + address);
             input = new Scanner(url.openStream());
         } catch (MalformedURLException ex) {
             System.err.println("Chybna adresa "+url.getPath()+". " + ex.getLocalizedMessage());
@@ -81,7 +72,6 @@ public class IOFile {
             System.err.println("Chyba otevírání souboru na adrese "+url.getPath()+". " + ex.getLocalizedMessage());
             return 0;
         }
-
         return input.nextDouble();
     }
     
@@ -90,7 +80,7 @@ public class IOFile {
         URL url = null;
         try {
             url = new URL(address);
-            System.out.println(channelOpen + address);
+//            System.out.println(channelOpen + address);
             input = new Scanner(url.openStream());
         } catch (MalformedURLException ex) {
             System.err.println("Chybna adresa "+url.getPath()+". " + ex.getLocalizedMessage());
@@ -109,7 +99,7 @@ public class IOFile {
         String ret = null;
         try {
             reader = new BufferedReader(new FileReader(nazev));
-            System.out.println(channelOpen + nazev);
+//            System.out.println(channelOpen + nazev);
             ret = reader.readLine();
             reader.close();
         } catch (FileNotFoundException ex) {
@@ -212,7 +202,7 @@ public class IOFile {
         int lines = 0;
         try {
             url = new URL(address);
-            System.out.println(channelOpen + address);
+//            System.out.println(channelOpen + address);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             while (reader.readLine() != null) {
                 lines++;
@@ -272,7 +262,7 @@ public class IOFile {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(nazev));
-            System.out.println(channelOpen + nazev);
+//            System.out.println(channelOpen + nazev);
             while (reader.readLine() != null) {
                 lines++;
             }
@@ -335,7 +325,7 @@ public class IOFile {
         URL url;
         try {
             url = new URL(address);
-            System.out.println(channelOpen + address);
+//            System.out.println(channelOpen + address);
             return ImageIO.read(url);
         } catch (MalformedURLException ex) {
             System.err.println("Chybna adresa "+address+". " + ex.getLocalizedMessage());
